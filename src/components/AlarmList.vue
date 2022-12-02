@@ -1,80 +1,62 @@
     <template>
     <section class="container">
-        <div class="alarms">
-            <div class="alarm"> 
-                <div class="head">
-                    <div class="name">Alarm</div>
-                  </div>
-                  <div class="body">
-                    <div class="left">
-                      <div class="time">12:00</div>
-                      <label class="toggle">
-                          <input type="checkbox" class="checkbox" hidden/>
-                          <div class="track"></div>
-                          <div class="thumb"></div>
-                        </label>
-                    </div>
-                    <div class="days">
-                        <div class="day active">M</div>
-                        <div class="day active">T</div>
-                        <div class="day active">W</div>
-                        <div class="day active">T</div>
-                        <div class="day active">F</div>
-                        <div class="day active">S</div>
-                        <div class="day active">S</div>
-                    </div>
-                </div>
-                    <div class="delete">
-                        <img src="../assets/delete.png" alt="" />
-                    </div>
-                </div>
-            </div>
-        <div id="add-alarm-btn">
-            <span>+</span>
-        </div>
+        <!-- alarm card  -->
+      <AddAlarm />
+        <!-- add alarm button  -->
 
-        <!-- Josu aca ya esta tambien la visual para agregar una nueva alarma con los stilos 
-         <div class="modal active" id="add-alarm-modal"> agregue "active" en este tag para que 
-        se active la vista faltaria agregar la funcion para activar el boton XD-->
-        <div class="modal" id="add-alarm-modal">
-            <div class="content">
-                <div class="head">
-                    <div class="title">Add Alarm</div>
-                    <div class="close">x</div>
-                </div>
-                <div class="body">
-                    <div class="name">
-                        <input type="text" id="name" value="alarm" />
-                    </div>
-                    <div class="time">
-                        <div class="hour">
-                            <div class="up">+</div>
-                            <div class="number">12</div>
-                            <div class="down">-</div>
-                        </div>
-                        <div class="minute">
-                            <div class="up">+</div>
-                            <div class="number">00</div>
-                            <div class="down">-</div>
-                        </div>
-                    </div>
-                    <div class="days">
-                        <div class="day active">M</div>
-                        <div class="day active">T</div>
-                        <div class="day active">W</div>
-                        <div class="day active">T</div>
-                        <div class="day active">F</div>
-                        <div class="day active">S</div>
-                        <div class="day active">S</div>
-        
-                    </div>
-                </div>
-            </div>
-        </div>
+        <!-- add alarm component  -->
+      <AlarmCard />
+      <!-- Josu aca ya esta tambien la visual para agregar una nueva alarma con los stilos 
+       <div class="modal active" id="add-alarm-modal"> agregue "active" en este tag para que 
+      se active la vista faltaria agregar la funcion para activar el boton XD-->
     </section>
 </template>
 
 <script>
+import AddAlarm from '@/components/AdddAlarm.js';
+import AlarmCard from '@/components/AlarmCard.js';
+
+ 
+export default {
+  name: 'AlarmList',
+  components: { AddAlarm, AlarmCard },
+  data () {
+    return {
+      currentPart: 0,
+      currentPosition: 0,
+      products: []
+    }
+  },
+  computed: {
+    productsData () {
+      return this.products
+    }
+  },
+  methods: {
+    obtainData: async function(){
+      const reference = this.$fire.firestore.collection('store_products');
+      const data = await reference.get().then(
+                  response => response
+                  .docs
+                  .map( e => {return e.data()})
+    ).catch( error => console.error(error) );
+      this.products = data;
+    }
+  },
+  beforeMount: function(){
+    this.obtainData();
+  }
+}
+
+
+
+
+
+
+
+
+
+
 // Pille Josu se supone que este es el codigo para las 
 // funciones de la alarma pero no pude configuralo
 
@@ -234,299 +216,296 @@
   </script>
   
   <style lang="scss" scoped>
-    .container {
-        width: auto;
-        height: auto;
-        border-radius: 10px;
-        padding: 20px;
-        background-color: #fff;
-    }
+    /*.container {*/
+        /*width: auto;*/
+        /*height: auto;*/
+        /*border-radius: 10px;*/
+        /*padding: 20px;*/
+        /*background-color: #fff;*/
+    /*}*/
   
-    .alarms {
-        position: relative;
-        margin-top: 80px;
-        height: 350px;
-        overflow: auto;
-        overflow-x: hidden;
-        padding: 10px 20px;
-        display: grid;
-        gap: 10px;
-        grid-template-columns: repeat(2, 1fr);
-    }
+    /*.alarms {*/
+        /*position: relative;*/
+        /*margin-top: 80px;*/
+        /*height: 350px;*/
+        /*overflow: auto;*/
+        /*overflow-x: hidden;*/
+        /*padding: 10px 20px;*/
+        /*display: grid;*/
+        /*gap: 10px;*/
+        /*grid-template-columns: repeat(2, 1fr);*/
+    /*}*/
 
-    .alarms .alarm {
-        position: relative;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-direction: column;
-        max-height: 150px;
-        gap: 10px;
-        padding: 20px;
-        border-radius: 10px;
-        background-color: #fff;
-        box-shadow: 0 0 0 1px #228f7621, 0 3px 5px #228f7663;
-        transition: 0.3s ease all;
-    }
+    /*.alarms .alarm {*/
+        /*position: relative;*/
+        /*display: flex;*/
+        /*align-items: center;*/
+        /*justify-content: center;*/
+        /*flex-direction: column;*/
+        /*max-height: 150px;*/
+        /*gap: 10px;*/
+        /*padding: 20px;*/
+        /*border-radius: 10px;*/
+        /*background-color: #fff;*/
+        /*box-shadow: 0 0 0 1px #228f7621, 0 3px 5px #228f7663;*/
+        /*transition: 0.3s ease all;*/
+    /*}*/
 
-    .alarms .alarm:hover {
-        transform: scale(1.02);
-    }
+    /*.alarms .alarm:hover {*/
+        /*transform: scale(1.02);*/
+    /*}*/
 
-    .alarm .head {
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-    }
+    /*.alarm .head {*/
+        /*width: 100%;*/
+        /*display: flex;*/
+        /*justify-content: space-between;*/
+    /*}*/
 
-    .alarm .name {
-        font-size: 12px;
-        font-weight: 700;
-        color: #40b89c;
-    }
+    /*.alarm .name {*/
+        /*font-size: 12px;*/
+        /*font-weight: 700;*/
+        /*color: #40b89c;*/
+    /*}*/
 
-    .alarm .body {
-        width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 10px;
-    }
+    /*.alarm .body {*/
+        /*width: 100%;*/
+        /*display: flex;*/
+        /*align-items: center;*/
+        /*justify-content: space-between;*/
+        /*gap: 10px;*/
+    /*}*/
 
-    .alarm .time {
-        font-size: 30px;
-        font-weight: 700;
-        margin-bottom: 20px;
-        color: #40b89c;
-    }
+    /*.alarm .time {*/
+        /*font-size: 30px;*/
+        /*font-weight: 700;*/
+        /*margin-bottom: 20px;*/
+        /*color: #40b89c;*/
+    /*}*/
 
-    .alarm .days .day {
-        font-size: 12px;
-        font-weight: 700;
-        color: #40b89c;
-    }
+    /*.alarm .days .day {*/
+        /*font-size: 12px;*/
+        /*font-weight: 700;*/
+        /*color: #40b89c;*/
+    /*}*/
 
-    .alarm .delete {
-        position: absolute;
-        top: -5px;
-        right: -5px;
-        width: 20px;
-        height: 20px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        opacity: 0;
-        visibility: hidden;
-        background-color: #40b89c;
-        color: #fff;
-        transition: .3s ease all;
-    }
+    /*.alarm .delete {*/
+        /*position: absolute;*/
+        /*top: -5px;*/
+        /*right: -5px;*/
+        /*width: 20px;*/
+        /*height: 20px;*/
+        /*border-radius: 50%;*/
+        /*display: flex;*/
+        /*align-items: center;*/
+        /*justify-content: center;*/
+        /*cursor: pointer;*/
+        /*opacity: 0;*/
+        /*visibility: hidden;*/
+        /*background-color: #40b89c;*/
+        /*color: #fff;*/
+        /*transition: .3s ease all;*/
+    /*}*/
 
-    .alarm .delete img {
-        pointer-events: none;
-        width: 60%;
-    }
+    /*.alarm .delete img {*/
+        /*pointer-events: none;*/
+        /*width: 60%;*/
+    /*}*/
 
-    .alarm:hover .delete {
-        opacity: 1;
-        visibility: visible;
-    }
+    /*.alarm:hover .delete {*/
+        /*opacity: 1;*/
+        /*visibility: visible;*/
+    /*}*/
 
-    #add-alarm-btn {
-        position: absolute;
-        bottom: 30px;
-        right: 30px;
-        width: 60px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 30px;
-        font-weight: 700;
-        color: #fff;
-        cursor: pointer;
-        text-transform: uppercase;
-        background-color: #40b89c;
-    }
+    /*#add-alarm-btn {*/
+        /*position: absolute;*/
+        /*bottom: 30px;*/
+        /*right: 30px;*/
+        /*width: 60px;*/
+        /*border-radius: 50%;*/
+        /*display: flex;*/
+        /*align-items: center;*/
+        /*justify-content: center;*/
+        /*font-size: 30px;*/
+        /*font-weight: 700;*/
+        /*color: #fff;*/
+        /*cursor: pointer;*/
+        /*text-transform: uppercase;*/
+        /*background-color: #40b89c;*/
+    /*}*/
 
-    .toggle {
-        position: relative;
-        width: max-content;
-    }
+    /*.toggle {*/
+        /*position: relative;*/
+        /*width: max-content;*/
+    /*}*/
 
-    .toggle .track {
-        width: 50px;
-        height: 25px;
-        border-radius: 25px;
-        background-color: #228f763d;
-        cursor: pointer;
-        transition: .3s ease all;
-    }
+    /*.toggle .track {*/
+        /*width: 50px;*/
+        /*height: 25px;*/
+        /*border-radius: 25px;*/
+        /*background-color: #228f763d;*/
+        /*cursor: pointer;*/
+        /*transition: .3s ease all;*/
+    /*}*/
 
-    .toggle .thumb {
-        position: absolute;
-        width: 20px;
-        height: 20px;
-        border-radius: 50%;
-        background-color: #40b89c;
-        top: 50%;
-        left: 2px;
-        cursor: pointer;
-        transform: translate(0, -50%);
-        transition: .3s ease all;
-        z-index: 1;
-    }
+    /*.toggle .thumb {*/
+        /*position: absolute;*/
+        /*width: 20px;*/
+        /*height: 20px;*/
+        /*border-radius: 50%;*/
+        /*background-color: #40b89c;*/
+        /*top: 50%;*/
+        /*left: 2px;*/
+        /*cursor: pointer;*/
+        /*transform: translate(0, -50%);*/
+        /*transition: .3s ease all;*/
+        /*z-index: 1;*/
+    /*}*/
 
-    .toggle .checkbox:checked ~ .thumb {
-        left: 28px;
-        background-color: #fff;
-    }
+    /*.toggle .checkbox:checked ~ .thumb {*/
+        /*left: 28px;*/
+        /*background-color: #fff;*/
+    /*}*/
 
-    .toggle .checkbox:checked ~ .track {
-        background-color: #40b89c;
-    }
+    /*.toggle .checkbox:checked ~ .track {*/
+        /*background-color: #40b89c;*/
+    /*}*/
 
-    .modal {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: #228f763d;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        z-index: 99;
-        opacity: 0;
-        visibility: hidden;
-        transition: .3s ease all;
-    }
+    /*.modal {*/
+        /*position: fixed;*/
+        /*top: 0;*/
+        /*left: 0;*/
+        /*width: 100%;*/
+        /*height: 100%;*/
+        /*background-color: #228f763d;*/
+        /*display: flex;*/
+        /*align-items: center;*/
+        /*justify-content: center;*/
+        /*z-index: 99;*/
+        /*opacity: 0;*/
+        /*visibility: hidden;*/
+        /*transition: .3s ease all;*/
+    /*}*/
 
-    .modal.active {
-        opacity: 1;
-        visibility: visible;
-    }
+    /*.modal.active {*/
+        /*opacity: 1;*/
+        /*visibility: visible;*/
+    /*}*/
 
-    .modal .content {
-        position: relative;
-        width: 400px;
-        background-color: #fff;
-        border-radius: 10px;
-        padding: 20px;
-        box-shadow: 0 0 0 1px #228f7621, 0 3px 15px #228f7663;
-    }
+    /*.modal .content {*/
+        /*position: relative;*/
+        /*width: 400px;*/
+        /*background-color: #fff;*/
+        /*border-radius: 10px;*/
+        /*padding: 20px;*/
+        /*box-shadow: 0 0 0 1px #228f7621, 0 3px 15px #228f7663;*/
+    /*}*/
 
-    .modal .content .head {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 10px;
-        margin-bottom: 20px;
-    }
+    /*.modal .content .head {*/
+        /*display: flex;*/
+        /*align-items: center;*/
+        /*justify-content: space-between;*/
+        /*gap: 10px;*/
+        /*margin-bottom: 20px;*/
+    /*}*/
 
-    .modal .head {
-        font-size: 20px;
-        font-weight: 700;
-        color: #40b89c;
-    }
+    /*.modal .head {*/
+        /*font-size: 20px;*/
+        /*font-weight: 700;*/
+        /*color: #40b89c;*/
+    /*}*/
 
-    .modal .close {
-        cursor: pointer;
-    }
+    /*.modal .close {*/
+        /*cursor: pointer;*/
+    /*}*/
 
-    .modal .body {
-        display: flex;
-        align-items: center;
-        flex-direction: column;
-        gap: 10px;
-    }
+    /*.modal .body {*/
+        /*display: flex;*/
+        /*align-items: center;*/
+        /*flex-direction: column;*/
+        /*gap: 10px;*/
+    /*}*/
 
-    .modal .time {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 10px;
-    }
+    /*.modal .time {*/
+        /*display: flex;*/
+        /*align-items: center;*/
+        /*justify-content: space-between;*/
+        /*gap: 10px;*/
+    /*}*/
 
-    .modal .time > div {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        font-size: 30px;
-        font-weight: 700;
-        color: #40b89c;
-    }
+    /*.modal .time > div {*/
+        /*display: flex;*/
+        /*flex-direction: column;*/
+        /*align-items: center;*/
+        /*font-size: 30px;*/
+        /*font-weight: 700;*/
+        /*color: #40b89c;*/
+    /*}*/
 
-    .modal .time > div div:not(.number) {
-        cursor: pointer;
-    }
+    /*.modal .time > div div:not(.number) {*/
+        /*cursor: pointer;*/
+    /*}*/
 
-    .modal .days {
-        display: flex;
-        gap: 10px;
-    }
+    /*.modal .days {*/
+        /*display: flex;*/
+        /*gap: 10px;*/
+    /*}*/
 
-    .modal .day {
-        width: 20px;
-        height: 20px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        font-size: 12px;
-        font-weight: 700;
-        color: #40b89c;
-    }
+    /*.modal .day {*/
+        /*width: 20px;*/
+        /*height: 20px;*/
+        /*border-radius: 50%;*/
+        /*display: flex;*/
+        /*align-items: center;*/
+        /*justify-content: center;*/
+        /*cursor: pointer;*/
+        /*font-size: 12px;*/
+        /*font-weight: 700;*/
+        /*color: #40b89c;*/
+    /*}*/
 
-    .modal .day.active {
-        color: #40b89c;
-        background-color: #fff;
-    }
+    /*.modal .day.active {*/
+        /*color: #40b89c;*/
+        /*background-color: #fff;*/
+    /*}*/
 
-    .modal .footer {
-        display: flex;
-        align-items: center;
-        justify-content: flex-end;
-        gap: 10px;
-        margin-top: 20px;
-    }
+    /*.modal .footer {*/
+        /*display: flex;*/
+        /*align-items: center;*/
+        /*justify-content: flex-end;*/
+        /*gap: 10px;*/
+        /*margin-top: 20px;*/
+    /*}*/
 
-    .modal .footer .btn {
-        font-size: 12px;
-        font-weight: 700;
-        padding: 10px 20px;
-        border-radius: 5px;
-        color: #40b89c;
-        cursor: pointer;
-        text-transform: uppercase;
-    }
+    /*.modal .footer .btn {*/
+        /*font-size: 12px;*/
+        /*font-weight: 700;*/
+        /*padding: 10px 20px;*/
+        /*border-radius: 5px;*/
+        /*color: #40b89c;*/
+        /*cursor: pointer;*/
+        /*text-transform: uppercase;*/
+    /*}*/
 
-    .modal .footer .btn.save {
-        color: #fff;
-        background-color: #40b89c;
-    }
+    /*.modal .footer .btn.save {*/
+        /*color: #fff;*/
+        /*background-color: #40b89c;*/
+    /*}*/
 
-    .modal .footer .btn.cancel {
-        color: #40b89c;
-        background-color: #228f763d;
-    }
+    /*.modal .footer .btn.cancel {*/
+        /*color: #40b89c;*/
+        /*background-color: #228f763d;*/
+    /*}*/
 
-    .modal input[type="text"] {
-        width: 100%;
-        height: 40px;
-        border-radius: 5px;
-        padding: 0 10px;
-        border: 1px solid #228f7621;
-        font-size: 14px;
-        font-weight: 700;
-        color: #40b89c;
-        outline: none;
-        transition: .3s ease all;
-    }
-
-
- 
+    /*.modal input[type="text"] {*/
+        /*width: 100%;*/
+        /*height: 40px;*/
+        /*border-radius: 5px;*/
+        /*padding: 0 10px;*/
+        /*border: 1px solid #228f7621;*/
+        /*font-size: 14px;*/
+        /*font-weight: 700;*/
+        /*color: #40b89c;*/
+        /*outline: none;*/
+        /*transition: .3s ease all;*/
+    /*}*/
   </style>
