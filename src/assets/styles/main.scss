@@ -1,9 +1,9 @@
 .container {
-      width: auto;
-      height: auto;
-      border-radius: 10px;
-      padding: 20px;
-      background-color: #fff;
+    width: auto;
+    height: auto;
+    border-radius: 10px;
+    padding: 20px;
+    background-color: #fff;
 }
 
 .alarms {
@@ -197,6 +197,9 @@
 }
 
 .modal .close {
+    border: none;
+    color: inherit;
+    background: none;
     cursor: pointer;
 }
 

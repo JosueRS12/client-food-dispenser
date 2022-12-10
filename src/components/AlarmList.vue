@@ -1,20 +1,25 @@
-    <template>
-    <section class="container">
-        <!-- alarm card  -->
-      <AddAlarm />
-        <!-- add alarm button  -->
+<template>
+  <section class="container">
+      <!-- alarm card  -->
+    <!-- >
+    <button id="add-alarm-btn" @click="popUpVisible">
+      +
+    </button>
+    -->
+    <AddAlarm />
+      <!-- add alarm button  -->
 
-        <!-- add alarm component  -->
-      <AlarmCard />
-      <!-- Josu aca ya esta tambien la visual para agregar una nueva alarma con los stilos 
-       <div class="modal active" id="add-alarm-modal"> agregue "active" en este tag para que 
-      se active la vista faltaria agregar la funcion para activar el boton XD-->
-    </section>
+      <!-- add alarm component  -->
+    <!-- <AlarmCard /> -->
+    <!-- Josu aca ya esta tambien la visual para agregar una nueva alarma con los stilos 
+     <div class="modal active" id="add-alarm-modal"> agregue "active" en este tag para que 
+    se active la vista faltaria agregar la funcion para activar el boton XD-->
+  </section>
 </template>
 
 <script>
-import AddAlarm from '@/components/AdddAlarm.js';
-import AlarmCard from '@/components/AlarmCard.js';
+import AddAlarm from '@/components/AddAlarm.vue';
+import AlarmCard from '@/components/AlarmCard.vue';
 
  
 export default {
@@ -22,17 +27,15 @@ export default {
   components: { AddAlarm, AlarmCard },
   data () {
     return {
-      currentPart: 0,
-      currentPosition: 0,
-      products: []
+      enable: false,
     }
   },
   computed: {
-    productsData () {
-      return this.products
-    }
   },
   methods: {
+    popUpVisible: function(){
+      this.enable = true;  
+    },
     obtainData: async function(){
       const reference = this.$fire.firestore.collection('store_products');
       const data = await reference.get().then(

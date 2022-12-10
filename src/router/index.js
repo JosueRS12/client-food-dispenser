@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
-import Alarm from '../components/AlarmList.vue'
+import AlarmList from '@/components/AlarmList.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -13,7 +13,7 @@ const router = createRouter({
     {
       path: '/alarms',
       name: 'alarms',
-      component: Alarm
+      component: AlarmList
     },
   ]
 })
