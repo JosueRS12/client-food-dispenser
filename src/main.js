@@ -2,12 +2,9 @@ import { createApp } from 'vue'
 
 import App from './App.vue'
 import router from './router'
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue-3/dist/bootstrap-vue-3.css'
 import "@/assets/styles/main.scss"
-// import store from './stores'
-
-// createApp(App).use(store).use(router).mount('#app')
-
-// import './assets/main.css'
 
 const app = createApp(App)
 

@@ -7,8 +7,7 @@
             <ul v-show="!mobile" class="navigation">
                 <li><router-link class="link" :to="{ name: 'home' }">Home</router-link></li>
                 <li><router-link class="link" :to="{ name: 'alarms' }">Alarmas</router-link></li>
-                <li><router-link class="link" :to="{ name: 'alarms' }">Utilidades</router-link></li>
-                <li><router-link class="link" :to="{ name: '' }">Signin</router-link></li>
+                <li><router-link class="link" :to="{ name: 'configurations' }">Configuraciones</router-link></li>
             </ul>
             <div class="icon">
                 <i @click="toggleMobileNav" v-show="mobile" class="far fa-bars" :class="{ 'icon-active': mobileNav }"></i>
@@ -17,8 +16,7 @@
                 <ul v-show="mobileNav" class="dropdown-nav">
                     <li><router-link class="link" :to="{ name: 'home' }">Home</router-link></li>
                 <li><router-link class="link" :to="{ name: 'alarms' }">Alarmas</router-link></li>
-                <li><router-link class="link" :to="{ name: 'alarms' }">Utilidades</router-link></li>
-                <li><router-link class="link" :to="{ name: '' }">Signin</router-link></li>
+                <li><router-link class="link" :to="{ name: 'configurations' }">Configuraciones</router-link></li>
             </ul>
             </transition>
         </nav>

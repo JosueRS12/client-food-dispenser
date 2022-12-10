@@ -2,43 +2,78 @@
   <div class="alarms">
     <div class="alarm"> 
       <div class="head">
-        <div class="name">Alarm</div>
+        <div class="name">{{label}}</div>
       </div>
       <div class="body">
         <div class="left">
-          <div class="time">12:00</div>
-          <label class="toggle">
-            <input type="checkbox" class="checkbox" hidden/>
-            <div class="track"></div>
-            <div class="thumb"></div>
-          </label>
+          <div class="time">{{time}}</div>
+          <b-form-checkbox 
+            @click = "changeStatusAlarm"
+            v-model="checked"
+            switch 
+            size="lg" 
+            class="checkbox toggle" 
+          />
         </div>
         <div class="days">
-          <div class="day active">M</div>
-          <div class="day active">T</div>
-          <div class="day active">W</div>
-          <div class="day active">T</div>
-          <div class="day active">F</div>
-          <div class="day active">S</div>
-          <div class="day active">S</div>
+          <div class="day active">{{repeat}}</div>
         </div>
       </div>
+      <button @click="deleteAlarm">
         <div class="delete">
-          <img src="../assets/delete.png" alt="" />
+            <img src="../assets/delete.png" alt="" />
         </div>
+      </button>
     </div>
   </div>
 </template>
 
 <script>
+/*import {ref} from 'vue'*/
 export default {
   name: 'AlarmCard',
-  components: { },
-  data () {
-    return {}
+  props: {
+    time: String,
+    status: Boolean,
+    label: String,
+    repeat: String,
+    id: String
   },
-  computed: {},
-  methods: {}
+  data () {
+    return {
+      checked: this.status
+    }
+  },
+  methods: {
+    changeStatusAlarm: async function(){
+      let alarmParams = {
+        alarm: {
+          status: !this.checked,
+        }
+      }
+      const res = await fetch(`http://localhost:8000/api/alarm/status/${this.id}`,{
+        headers: {
+          'Content-Type': 'application/json'  
+        },
+        method: 'PUT',
+        body: JSON.stringify(alarmParams) 
+      });
+      const data = await res.json();
+      console.log(data.data)
+    },
+
+    deleteAlarm: async function(){
+      const res = await fetch(`http://localhost:8000/api/alarm/remove/${this.id}`,{
+        headers: {
+          'Content-Type': 'application/json'  
+        },
+        method: 'DELETE'
+      });
+      const data = await res.json();
+      console.log(data.data);
+      window.alert("Alarma Eliminada");
+    }
+  }
 }
 </script>
 

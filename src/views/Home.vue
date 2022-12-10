@@ -2,12 +2,12 @@
     <div class="home">
       <section class="hero">
         <div class="hero-text">
-          <h4>Alarm Manager</h4>
+          <h4>Pet Feeder</h4>
           <hr />
-          <h2>
-            SetUp <br />
-            Your Alarms
-          </h2>
+          <h3>
+            Crea alarmas para alimentar a tu mascota
+            con el dispensador automático de alimento.
+          </h3>
           <hr />
         </div>
         <div class="clock-wrapper">
