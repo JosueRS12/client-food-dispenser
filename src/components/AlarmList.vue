@@ -13,6 +13,7 @@
         :label="alarm.label"
         :repeat="translateRepeat(alarm.repeat)"
         :id = "alarm._id"
+        :breed = "translateBreed(alarm.breed)"
       />
     </div>
     <AddAlarm />
@@ -65,6 +66,19 @@ export default {
         default:
           return "Diario"
       }
+    },
+    translateBreed: function(breedSize){
+      switch(breedSize){
+        case 'little':
+          return "Raza pequeña"
+        case 'mid':
+          return "Raza mediana"
+        case 'big':
+          return "Raza grande"
+        default:
+          return "No se ha especificado la raza"
+      }
+
     }
   },
   mounted: function(){

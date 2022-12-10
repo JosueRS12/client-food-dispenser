@@ -17,9 +17,10 @@
         </div>
         <div class="days">
           <div class="day active">{{repeat}}</div>
+          <div class="day active">{{breed}}</div>
         </div>
       </div>
-      <button @click="deleteAlarm">
+      <button @click="deleteAlarm" class="delete">
         <div class="delete">
             <img src="../assets/delete.png" alt="" />
         </div>
@@ -37,7 +38,8 @@ export default {
     status: Boolean,
     label: String,
     repeat: String,
-    id: String
+    id: String,
+    breed: String
   },
   data () {
     return {
